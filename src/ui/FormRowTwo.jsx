@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const FormRow = styled.div`
+export const FormRow = styled.div`
   display: grid;
   align-items: center;
   grid-template-columns: 24rem 1fr 1.2fr;
