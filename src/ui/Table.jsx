@@ -1,6 +1,6 @@
 import { createContext, useContext } from "react";
 import styled from "styled-components";
-
+import Error from "../ui/Empty";
 const StyledTable = styled.div`
   border: 1px solid var(--color-grey-200);
 
@@ -88,6 +88,9 @@ function Row({ children }) {
   );
 }
 function Body({ data, render }) {
+  if (!data.length) {
+    return <Empty>There is not Data Exists</Empty>;
+  }
   return <StyledBody>{data.map(render)}</StyledBody>;
 }
 

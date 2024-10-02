@@ -8,6 +8,7 @@ import useCreateCabin from "./useCreateCabin";
 import Modal from "../../ui/Modal";
 import ConfirmDelete from "../../ui/ConfirmDelete";
 import Table from "../../ui/Table";
+import Menus from "../../ui/Menus";
 
 // const TableRow = styled.div`
 //   display: grid;
@@ -120,6 +121,15 @@ function CabinRow({ cabin }) {
             {/* <button onClick={() => deleteCabin(cabinId)} disabled={isDeleting}>
               <HiTrash />
             </button> */}
+
+            <Menus.Menu>
+              <Menus.Toggle id={cabinId} />
+              <Menus.List id={cabinId}>
+                <Menus.Button>Duplicate</Menus.Button>
+                <Menus.Button>Edit</Menus.Button>
+                <Menus.Button>Delete</Menus.Button>
+              </Menus.List>
+            </Menus.Menu>
           </div>
         </Modal>
       </Table.Row>
