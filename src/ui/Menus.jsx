@@ -1,7 +1,8 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { HiEllipsisVertical } from "react-icons/hi2";
 import styled from "styled-components";
+import useOutSideClick from "../hooks/useOutSideClick";
 
 const Menu = styled.div`
   display: flex;
@@ -68,21 +69,30 @@ const MenuContext = createContext();
 
 function Menus({ children }) {
   const [openId, setOpenId] = useState("");
+  const [position, setPosition] = useState(null);
 
   const close = () => setOpenId("");
   const open = setOpenId;
 
   return (
-    <MenuContext.Provider value={{ openId, close, open }}>
+    <MenuContext.Provider
+      value={{ openId, close, open, position, setPosition }}
+    >
       {children}
     </MenuContext.Provider>
   );
 }
 
 function Toggle({ id }) {
-  const { openId, close, open } = useContext(MenuContext);
+  const { openId, close, open, setPosition } = useContext(MenuContext);
 
-  function handleClick() {
+  function handleClick(e) {
+    const rect = e.target.closest("button").getBoundingClientRect();
+    setPosition({
+      x: window.innerWidth - rect.width - rect.x,
+      y: rect.y + rect.height + 8,
+    });
+    console.log(rect);
     openId === "" || openId !== id ? open(id) : close();
   }
   return (
@@ -93,21 +103,55 @@ function Toggle({ id }) {
 }
 
 function List({ id, children }) {
-  const { openId } = useContext(MenuContext);
+  const { openId, position, setPosition, close } = useContext(MenuContext);
+  const { ref } = useOutSideClick(close);
+
+  useEffect(() => {
+    // if (openId !== id) return;
+
+    const handleScroll = () => {
+      const rect = document.getElementById(id)?.getBoundingClientRect();
+      if (rect) {
+        setPosition({
+          x: window.innerWidth - rect.width - rect.x,
+          y: rect.y + rect.height + window.scrollY + 8,
+        });
+      } else {
+        close(); // Close if the button is removed from DOM
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [openId, setPosition, close, id]);
 
   if (openId !== id) {
     return null;
   }
 
   return createPortal(
-    <StyledList position={{ x: 10, y: 20 }}>{children}</StyledList>,
+    <StyledList position={position} ref={ref}>
+      {children}
+    </StyledList>,
     document.body
   );
 }
-function Button({ children }) {
+function Button({ children, icon, onClick }) {
+  const { close } = useContext(MenuContext);
+
+  function handleClick() {
+    onClick?.();
+    close();
+  }
   return (
     <li>
-      <StyledButton>{children}</StyledButton>
+      <StyledButton onClick={handleClick}>
+        {icon}
+        <span>{children}</span>
+      </StyledButton>
     </li>
   );
 }

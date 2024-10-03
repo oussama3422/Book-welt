@@ -65,7 +65,11 @@ export async function createEditCabin(newCabin, id) {
     typeof newCabin.image === "string" &&
     newCabin.image.startsWith(supabaseUrl);
 
-  const imageName = `${Math.random()}-${newCabin.image.name}`.replace("/", "");
+  const imageName =
+    `${Math.random()}-${typeof newCabin.image === "string" ? newCabin.image : newCabin.image.name}`.replace(
+      "/",
+      ""
+    );
   const imagePath = hasImagePath
     ? newCabin.image
     : `${supabaseUrl}/storage/v1/object/public/cabin-images/${imageName}`;
