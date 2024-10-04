@@ -35,14 +35,16 @@ const FilterButton = styled.button`
   }
 `;
 
-function Filter({ optionField, options }) {
+function Filter({ filterField, options }) {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const currentFilterValue =
-    searchParams.get(optionField) || options.at(0).value;
-
+    searchParams.get(filterField) || options.at(0).value;
+  console.log(currentFilterValue);
   function handleClick(value) {
-    searchParams.set(optionField, value);
+    console.log(value);
+    console.log(filterField);
+    searchParams.set(filterField, value);
     setSearchParams(searchParams);
   }
 
@@ -50,6 +52,7 @@ function Filter({ optionField, options }) {
     <StyledFilter>
       {options.map((option) => (
         <FilterButton
+          key={option.value}
           onClick={() => handleClick(option.value)}
           active={currentFilterValue === option.value}
           disabled={currentFilterValue === option.value}

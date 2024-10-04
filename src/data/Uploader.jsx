@@ -109,7 +109,6 @@ function Uploader() {
     await deleteBookings();
     await deleteGuests();
     await deleteCabins();
-
     // Bookings need to be created LAST
     await createGuests();
     await createCabins();
