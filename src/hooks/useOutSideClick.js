@@ -2,7 +2,6 @@ import { useEffect, useRef } from "react";
 
 export default function useOutSideClick(handler, LesseningCapturing = true) {
   const ref = useRef();
-  console.log("starting...");
   useEffect(
     function () {
       function handleClick(e) {
