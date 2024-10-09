@@ -17,17 +17,27 @@ const HeadingGroup = styled.div`
   gap: 2.4rem;
   align-items: center;
 `;
-
 function BookingDetail() {
-  // const booking = {};
   const { isLoading, booking, error } = useBooking();
-  // const status = "checked-in";
-  console.log(booking);
-  const { status, id: bookingId } = booking;
 
+  // Handle loading state
   if (isLoading) {
     return <Spinner />;
   }
+
+  // Handle error state
+  if (error) {
+    return <div>Error fetching booking: {error.message}</div>;
+  }
+
+  // Ensure booking is defined before destructuring
+  if (!booking) {
+    return <div>No booking details found.</div>;
+  }
+
+  // Destructure status and bookingId after confirming that booking exists
+  const { status, id: bookingId } = booking;
+
   const moveBack = useMoveBack();
 
   const statusToTagName = {
@@ -46,7 +56,7 @@ function BookingDetail() {
         <ButtonText onClick={moveBack}>&larr; Back</ButtonText>
       </Row>
 
-      {/* <BookingDataBox booking={booking} /> */}
+      <BookingDataBox booking={booking} />
 
       <ButtonGroup>
         <Button variation="secondary" onClick={moveBack}>

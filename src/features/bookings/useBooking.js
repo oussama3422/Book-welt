@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 
 export default function useBooking() {
   const { bookingId } = useParams();
+  console.log("bookingId", bookingId);
   const {
     isLoading,
     data: booking,
@@ -13,6 +14,5 @@ export default function useBooking() {
     queryFn: () => getBooking(bookingId),
     retry: false,
   });
-  console.log(booking);
   return { isLoading, booking, error };
 }
