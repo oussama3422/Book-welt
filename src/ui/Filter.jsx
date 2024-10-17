@@ -42,9 +42,10 @@ function Filter({ filterField, options }) {
     searchParams.get(filterField) || options.at(0).value;
   console.log(currentFilterValue);
   function handleClick(value) {
-    console.log(value);
-    console.log(filterField);
     searchParams.set(filterField, value);
+    if (searchParams.get("page")) {
+      searchParams.set("page", 1);
+    }
     setSearchParams(searchParams);
   }
 
