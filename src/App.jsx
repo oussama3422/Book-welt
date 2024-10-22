@@ -19,7 +19,8 @@ import ProtectedRoute from "./pages/ProtectedRoute";
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 60 * 1000,
+      staleTime: 0,
+      // staleTime: 60 * 1000,
     },
   },
 });
@@ -30,7 +31,6 @@ function App() {
       <GlobalStyle />
       <BrowserRouter>
         <Routes>
-          <Route path="login" element={<Login />} />
           <Route
             element={
               <ProtectedRoute>
@@ -47,8 +47,9 @@ function App() {
             <Route path="account" element={<Account />} />
             <Route path="users" element={<Users />} />
             <Route path="settings" element={<Settings />} />
-            <Route path="*" element={<PageNotFound />} />
           </Route>
+          <Route path="login" element={<Login />} />
+          <Route path="*" element={<PageNotFound />} />
         </Routes>
       </BrowserRouter>
       <Toaster

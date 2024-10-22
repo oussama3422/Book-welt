@@ -6,23 +6,30 @@ export async function loginApi({ email, password }) {
     password: password,
   });
   if (error) {
+    console.log("error in use loginApi", error.message);
     throw new Error(error.message);
   }
-  console.log(data);
   return data;
 }
 
-export async function getAuthenticatedUser() {
+export async function getCurrentUser() {
   const { data: session } = await supabase.auth.getSession();
 
   if (!session.session) {
     return null;
   }
 
-  const { data, error } =await supabase.auth.getUser();
+  const { data, error } = await supabase.auth.getUser();
   if (error) {
     throw new Error(error.message);
   }
-  console.log(data);
   return data?.user;
+}
+
+export async function logoutApi() {
+  const { error } = await supabase.auth.signOut();
+
+  if (error) {
+    throw new Error(error.message);
+  }
 }

@@ -4,13 +4,11 @@ import Form from "../../ui/Form";
 import Input from "../../ui/Input";
 import FormRowVertical from "../../ui/FormRowVertical";
 import { useLogin } from "./useLogin";
-import Spinner from "../../ui/Spinner";
 import SpinnerMini from "../../ui/SpinnerMini";
 
 function LoginForm() {
-  const [email, setEmail] = useState("oussama@gmail.com");
-  const [password, setPassword] = useState("ossama123");
-
+  const [email, setEmail] = useState("ossama@gmail.com");
+  const [password, setPassword] = useState("Ossama@123");
   const { login, isLoading } = useLogin();
 
   function handleSubmit(e) {
@@ -18,7 +16,15 @@ function LoginForm() {
     if (!email || !password) {
       return;
     }
-    login({ email, password });
+    login(
+      { email, password },
+      {
+        onSettled: () => {
+          setEmail("");
+          setPassword("");
+        },
+      }
+    );
   }
 
   return (
