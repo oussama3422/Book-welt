@@ -1,5 +1,24 @@
 import supabase from "./supabase";
 
+export async function signUpApi({ fullName, email, password }) {
+  const { data, error } = await supabase.auth.signUp({
+    email,
+    password,
+    options: {
+      data: {
+        fullName,
+        avatar: "",
+      },
+    },
+  });
+  if (error) {
+    throw new Error(error.message);
+  }
+  console.log("error", error);
+  console.log("data", data);
+  return data;
+}
+
 export async function loginApi({ email, password }) {
   const { data, error } = await supabase.auth.signInWithPassword({
     email: email,
