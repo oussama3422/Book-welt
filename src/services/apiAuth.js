@@ -1,7 +1,7 @@
 import supabase from "./supabase";
 
 export async function signUpApi({ fullName, email, password }) {
-  const { data, error } = await supabase.auth.signUp({
+  const { data, error } = await supabase.auth?.signUp({
     email,
     password,
     options: {
@@ -12,13 +12,20 @@ export async function signUpApi({ fullName, email, password }) {
     },
   });
   if (error) {
-    throw new Error(error.message);
+    console.error("Signup error:", error);
+    if (
+      error.message.includes("already registered") ||
+      error.message.includes("not authorized")
+    ) {
+      throw new Error(
+        "This email is already registered or the email isn't authorized for sign-up. Please check or try a different email."
+      );
+    }
+    throw new Error(`Sign-up failed: ${error.message}`);
   }
-  console.log("error", error);
-  console.log("data", data);
+  console.log("Signup successful:", data);
   return data;
 }
-
 export async function loginApi({ email, password }) {
   const { data, error } = await supabase.auth.signInWithPassword({
     email: email,
