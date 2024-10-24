@@ -73,7 +73,7 @@ function CabinRow({ cabin }) {
       discount,
       image,
       description,
-    });
+    },{onSettled:()=>setShowForm(false)});
   }
 
   return (
