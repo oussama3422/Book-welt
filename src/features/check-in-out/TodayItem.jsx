@@ -2,6 +2,8 @@ import styled from "styled-components";
 import Button from "../../ui/Button";
 import { Link } from "react-router-dom";
 import CheckoutButton from "./CheckoutButton";
+import Tag from "../../ui/Tag";
+import { Flag } from "../../ui/Flag";
 
 const StyledTodayItem = styled.li`
   display: grid;
@@ -24,24 +26,34 @@ const Guest = styled.div`
 
 function TodayItem({ activity }) {
   const { id, status, numNights, guests } = activity;
+  console.log("activity", activity);
+
+  // Destructure safely
+  const countryFlag = guests?.countryFlag || "default-flag-url"; // Provide a default URL if necessary
+  const fullName = guests?.fullName || "Unknown Guest"; // Default name if absent
+
   return (
     <StyledTodayItem>
       {status === "unconfirmed" && <Tag type="green">Arriving</Tag>}
       {status === "checked-in" && <Tag type="blue">Departing</Tag>}
-      <Flag src={guests.countryFlag} alt={`Flag of ${guests.countryFlag}`} />
-      <Guest>{guests.fullName}</Guest>
+      <Flag src={countryFlag} alt={`Flag of ${countryFlag}`} />
+      <Guest>{fullName}</Guest>
       <div>{numNights} nights</div>
-      {status === "unconfirmed" && (
-        <Button
-          sizes="small"
-          variations="primary"
-          as={Link}
-          to={`/checkin/${id}`}
-        >
-          Check In
-        </Button>
-      )}
-      {status === "checked-in" && <CheckoutButton bookingId={id} />}
+      <div style={{ display: "flex" }}>
+        {" "}
+        {/* Adding flex for button alignment */}
+        {status === "unconfirmed" && (
+          <Button
+            as={Link}
+            to={`/checkin/${id}`}
+            size="small"
+            variant="primary"
+          >
+            CheckIn
+          </Button>
+        )}
+        {status === "checked-in" && <CheckoutButton bookingId={id} />}
+      </div>
     </StyledTodayItem>
   );
 }

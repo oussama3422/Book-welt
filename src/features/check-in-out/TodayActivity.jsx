@@ -48,7 +48,7 @@ function TodayActivity() {
       </Row>
 
       {isLoading ? (
-        <Spinner/>
+        <Spinner />
       ) : activities?.length > 0 ? (
         <TodayList>
           {activities.map((activity) => (

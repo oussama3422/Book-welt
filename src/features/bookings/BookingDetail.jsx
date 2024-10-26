@@ -15,6 +15,7 @@ import Modal from "../../ui/Modal";
 import ConfirmDelete from "../../ui/ConfirmDelete";
 import { useNavigate } from "react-router-dom";
 import { useMoveBack } from "../../hooks/useMoveBack";
+import Empty from "../../ui/Empty";
 
 const HeadingGroup = styled.div`
   display: flex;
@@ -31,6 +32,9 @@ function BookingDetail() {
   // Handle loading state
   if (isLoading) {
     return <Spinner />;
+  }
+  if (!booking) {
+    return <Empty resource="booking" />;
   }
   // Handle error state
   if (error) {

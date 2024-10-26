@@ -46,8 +46,12 @@ function CheckinBooking() {
   const optionalBreakfastPrice =
     settings.breakfastPrice * numNights * numGuests;
 
-  useEffect(() => setConfirmedPaid(booking?.isPaid ?? false), [booking]);
-
+  // useEffect(() => setConfirmedPaid(booking?.isPaid ?? false), [booking]);
+  useEffect(() => {
+    if (booking) {
+      setConfirmedPaid(booking.isPaid ?? false);
+    }
+  }, [booking]);
   function handleCheckIn() {
     console.log("CheckIn");
     if (!confirmPaid) {
