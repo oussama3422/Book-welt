@@ -17,7 +17,7 @@ const StyledHeader = styled.aside`
 function Header() {
   return (
     <StyledHeader>
-      {/* <Logout /> */}
+      <Logout />
       <UserAvatar />
       <HeaderMenu />
     </StyledHeader>
