@@ -1,6 +1,4 @@
 import styled from "styled-components";
-// import Logo from "./Logo";
-import Logout from "../features/authentication/Logout";
 import HeaderMenu from "./HeaderMenu";
 import UserAvatar from "../features/authentication/UserAvatar";
 const StyledHeader = styled.aside`
@@ -17,7 +15,6 @@ const StyledHeader = styled.aside`
 function Header() {
   return (
     <StyledHeader>
-      <Logout />
       <UserAvatar />
       <HeaderMenu />
     </StyledHeader>
