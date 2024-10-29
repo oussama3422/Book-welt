@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import Logo from "./Logo";
+// import Logo from "./Logo";
 import Logout from "../features/authentication/logout";
 import HeaderMenu from "./HeaderMenu";
 import UserAvatar from "../features/authentication/UserAvatar";
